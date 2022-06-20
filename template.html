@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Assignment 3</title>
+		<style>
+			body {
+				margin: 0;
+				padding: 0;
+			}
+			.container {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				min-height: 100vh;
+				height: 100vh;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Assignment 3</h1>
+			<p>
+				Water: {{.Status.Water }}
+				<span>
+					{{if (lt .Status.Water 5)}} Status: Aman {{end}} {{if and (ge .Status.Water
+					6) (le .Status.Water 8) }} Status: Siaga {{end}} {{if (gt .Status.Water 8)
+					}} Status: Bahaya {{end}}
+				</span>
+			</p>
+			<p>
+				Wind: {{.Status.Wind }}
+
+				<span>
+					{{if (lt .Status.Wind 6)}} Status: Aman {{end}} {{if and (ge .Status.Wind
+					7) (le .Status.Wind 15) }} Status: Siaga {{end}} {{if (gt .Status.Water 15)
+					}} Status: Bahaya {{end}}
+				</span>
+			</p>
+		</div>
+		<!-- <script lang="javascript">
+			setInterval(() => {
+				window.location.reload()
+			}, 15000)
+		</script> -->
+	</body>
+</html>
