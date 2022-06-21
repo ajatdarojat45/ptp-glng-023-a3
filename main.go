@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"math/rand"
-	// "time"
+	"time"
 )
 
 var PORT = ":8000"
@@ -20,12 +20,13 @@ type DataFile struct {
 }
 
 func main(){
-	http.HandleFunc("/", getWaterAndWind)
+	go generateWaterAndWind()
+	http.HandleFunc("/", index)
 	fmt.Println("server is running", PORT)
 	http.ListenAndServe(PORT, nil)
 }
 
-func getWaterAndWind(w http.ResponseWriter, r *http.Request)  {
+func index(w http.ResponseWriter, r *http.Request)  {
 	tmplte, err := template.ParseFiles("template.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -33,7 +34,22 @@ func getWaterAndWind(w http.ResponseWriter, r *http.Request)  {
 	}
 
 	data := DataFile{}
-	// for {
+
+	dbyte, err := ioutil.ReadFile("db.json")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	
+	json.Unmarshal(dbyte, &data)
+
+	tmplte.Execute(w, data)
+	return
+}
+
+func generateWaterAndWind(){
+	for {
+		data := DataFile{}
 		randomWater := rand.Intn(15)
 		randomWind := rand.Intn(20)
 	
@@ -43,8 +59,6 @@ func getWaterAndWind(w http.ResponseWriter, r *http.Request)  {
 		newJson, _ := json.Marshal(data)
 		ioutil.WriteFile("db.json", newJson, 0644)
 	
-	// 	time.Sleep(time.Second * 15)
-	// }
-	tmplte.Execute(w, data)
-	return
+		time.Sleep(time.Second * 15)
+	}
 }

@@ -23,6 +23,7 @@
 	<body>
 		<div class="container">
 			<h1>Assignment 3</h1>
+			<h3 id="timer"></h3>
 			<p>
 				Water: {{.Status.Water }}
 				<span>
@@ -41,10 +42,18 @@
 				</span>
 			</p>
 		</div>
-		<!-- <script lang="javascript">
+		<script lang="javascript">
+			function changeValue() {
+				document.getElementById("timer").innerHTML = "Timer: " + --value + " seconds";
+			}
+
+			var timerInterval = null;
+			value = 16;
+			timerInterval = setInterval(changeValue, 1000);
+
 			setInterval(() => {
 				window.location.reload()
-			}, 15000)
-		</script> -->
+			}, 16000)
+		</script>
 	</body>
 </html>
